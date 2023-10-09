@@ -17,8 +17,13 @@ data("brfss_smart2010")
 
 ## Clean BRFSS data
 ```{r}
-brfss_smart2010 |>
-  janitor::clean_names()
+levels <- c("Poor", "Fair", "Good", "Very good", "Excellent")
+values <- c(1, 2, 3, 4, 5)
+
+brfss_smart2010_tidy = brfss_smart2010 |>
+  janitor::clean_names() |>
+  filter(topic == "Overall Health") |>
+  transform(response = factor(response, levels = levels, labels = values, ordered = TRUE))
   
 ```
 
