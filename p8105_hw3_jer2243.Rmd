@@ -12,6 +12,7 @@ output: github_document
 ```{r}
 library(tidyverse)
 library(dplyr)
+library(ggplot2)
 library(p8105.datasets)
 data("brfss_smart2010")
 ```
@@ -67,6 +68,9 @@ brfss_excellent = brfss_smart2010_tidy |>
 
 ## Make a spaghetti plot of the avg value over time within a state
 ```{r}
-
+ggplot(brfss_excellent, aes(x=year, y=data_value_avg, color=locationabbr, group=locationabbr)) + 
+  geom_line() +
+  labs(x="Year", y="Average Data Value", color = "State") +
+  ggtitle("Average Data Value by State over Years")
 ```
 
