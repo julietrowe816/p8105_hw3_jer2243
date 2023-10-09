@@ -1,0 +1,24 @@
+---
+title: "p8105_hw3_jer2243"
+author: "Juliet Rowe"
+date: "2023-10-09"
+output: github_document
+---
+
+
+# Problem 2
+
+## Load tidyverse and BRFSS data
+```{r}
+library(tidyverse)
+library(p8105.datasets)
+data("brfss_smart2010")
+```
+
+## Clean BRFSS data
+```{r}
+brfss_smart2010 |>
+  janitor::clean_names()
+  
+```
+
