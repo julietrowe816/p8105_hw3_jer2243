@@ -66,11 +66,26 @@ brfss_excellent = brfss_smart2010_tidy |>
   
 ```
 
-## Make a spaghetti plot of the avg value over time within a state
+
+## Spaghetti plot of the avg value over time within a state
 ```{r}
 ggplot(brfss_excellent, aes(x=year, y=data_value_avg, color=locationabbr, group=locationabbr)) + 
   geom_line() +
   labs(x="Year", y="Average Data Value", color = "State") +
   ggtitle("Average Data Value by State over Years")
 ```
+
+
+## Two-panel plot
+```{r}
+ny_data <- brfss_smart2010_tidy |>
+  filter(locationabbr == "NY" & year %in% c(2006, 2010))
+
+ggplot(ny_data, aes(x = data_value, fill = response)) +
+  geom_histogram(binwidth = 6, position = "dodge") +
+  facet_wrap(~ year, nrow = 1) +
+  labs(x = "Data Value", y = "Frequency", fill = "Response") +
+  ggtitle("Distribution of Data Value by Response in NY State")
+```
+
 
