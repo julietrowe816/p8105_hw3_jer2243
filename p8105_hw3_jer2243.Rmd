@@ -39,7 +39,7 @@ brfss_2002 <- brfss_smart2010_tidy |>
 result <- brfss_2002 |>
   group_by(locationabbr) |>
   summarise(unique_locationdesc = n_distinct(locationdesc)) |>
-  filter(unique_locationdesc > 7)
+  filter(unique_locationdesc >= 7)
 
 print(result)
 
@@ -49,23 +49,23 @@ brfss_2010 <- brfss_smart2010_tidy |>
 result <- brfss_2010 |>
   group_by(locationabbr) |>
   summarise(unique_locationdesc = n_distinct(locationdesc)) |>
-  filter(unique_locationdesc > 7)
+  filter(unique_locationdesc >= 7)
 
 print(result)
 ```
-3 states in 2002 were observed at 7 or more locations (MA, NJ, PA). 11 states in 2010 were observed at 7 or more locations (CA, FL, MA, MD, NC, NE, NJ, NY, OH, TX, WA).
+In 2002, 6 states were observed at 7 or more locations (CT, FL, MA, NC, NJ, PA). In 2010, 14 states were observed at 7 or more locations (CA, CO, FL, MA, MD, NC, NE, NJ, NY, OH, PA, SC, TX, WA).
 
 
 ## Construct a dataset limited to "excellent" responses
 ```{r}
 brfss_excellent = brfss_smart2010_tidy |>
   filter(response == "5") |>
-  group_by(locationabbr) |>
+  group_by(locationabbr, year) |>
   mutate(data_value_avg = mean(data_value, na.rm = TRUE)) |>
   select(year, locationabbr, data_value_avg)
   
 ```
-
+The dataset limited to "excellent" responses consists off 2,125 observations.
 
 ## Spaghetti plot of the avg value over time within a state
 ```{r}
