@@ -95,10 +95,31 @@ ADD COMMENTS HERE
 
 ## Import and clean demographic and accelerometer data
 ```{r}
-demographic_data = read_csv(file = "~/Desktop/p8105_hw3_jer2243/nhanes_covar.csv") |>
+demo_data = read_csv(file = "~/Desktop/p8105_hw3_jer2243/nhanes_covar.csv", skip=4) |>
   janitor::clean_names()
 
 accel_data = read_csv(file = "~/Desktop/p8105_hw3_jer2243/nhanes_accel.csv") |>
   janitor::clean_names()
+```
+
+
+## Clean the demo dataset
+```{r}
+demo_data <- subset(demo_data, age>=21)
+demo_data <- demo_data[complete.cases(demo_data), ]
+```
+
+
+## Merge demo dataset with accel dataset
+```{r}
+merged_data = 
+  left_join(demo_data, accel_data, by = "seqn")
+```
+
+
+## Encode data with reasonable variable classes
+
+```{r}
+
 ```
 
