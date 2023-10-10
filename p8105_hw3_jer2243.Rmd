@@ -74,7 +74,7 @@ ggplot(brfss_excellent, aes(x=year, y=data_value_avg, color=locationabbr, group=
   labs(x="Year", y="Average Data Value", color = "State") +
   ggtitle("Average Data Value by State over Years")
 ```
-
+ADD COMMENTS HERE
 
 ## Two-panel plot
 ```{r}
@@ -87,5 +87,18 @@ ggplot(ny_data, aes(x = data_value, fill = response)) +
   labs(x = "Data Value", y = "Frequency", fill = "Response") +
   ggtitle("Distribution of Data Value by Response in NY State")
 ```
+ADD COMMENTS HERE
 
+
+# Problem 3
+
+
+## Import and clean demographic and accelerometer data
+```{r}
+demographic_data = read_csv(file = "~/Desktop/p8105_hw3_jer2243/nhanes_covar.csv") |>
+  janitor::clean_names()
+
+accel_data = read_csv(file = "~/Desktop/p8105_hw3_jer2243/nhanes_accel.csv") |>
+  janitor::clean_names()
+```
 
