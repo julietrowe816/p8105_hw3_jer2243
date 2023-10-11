@@ -269,6 +269,15 @@ Overall, total activity tended to decrease as age increased for both sexes and a
 
 ## Make a 3-panel plot of the 24-hr activity time course for each education level and use color to indicate sex
 ```{r}
+merged_data_4 = merged_data_3 |>
+  pivot_longer(
+    min1:min1440,
+    names_to = "minute",
+    values_to = "activity"
+    )
 
+merged_data_4 |>
+  ggplot(aes(x=minute, y=activity, color=sex)) + geom_point(alpha=0.5, size=0.5) +
+  geom_smooth() + facet_wrap(.~education)
 ```
 COMMENT
