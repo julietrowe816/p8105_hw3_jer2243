@@ -239,9 +239,19 @@ COMMENT
 ## Graph the age distributions for men and women in each education category
 ```{r}
 merged_data_2 |>
-  ggplot(aes(x=age, y=education, color=sex)) + geom_boxplot() +
+  ggplot(aes(x=age)) +
+  geom_histogram(bins=10) +
+  facet_wrap(sex~education) +
   labs(title = "Age distributions for men and women by education category")
 
 ```
 COMMENT
+
+## Create total activity variable
+```{r}
+merged_data_2 |>
+  mutate(
+    total_activity = rowSums(across(c(min1:min1440))
+  ))
+```
 
