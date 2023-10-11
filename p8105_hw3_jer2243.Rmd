@@ -22,13 +22,6 @@ knitr::opts_chunk$set(
 
 theme_set(theme_minimal() + theme(legend.position = "bottom"))
 
-options(
-  ggplot2.continuous.colour = "viridis",
-  ggplot2.continuous.fill = "viridis"
-)
-
-scale_colour_discrete = scale_colour_viridis_d
-scale_fill_discrete = scale_fill_viridis_d
 ```
 
 # Problem 1
@@ -278,6 +271,7 @@ merged_data_4 = merged_data_3 |>
 
 merged_data_4 |>
   ggplot(aes(x=minute, y=activity, color=sex)) + geom_point(alpha=0.5, size=0.5) +
-  geom_smooth() + facet_wrap(.~education)
+  geom_smooth() + facet_wrap(.~education) +
+  labs(title = "24-hour activity time course by education level and sex")
 ```
 COMMENT
