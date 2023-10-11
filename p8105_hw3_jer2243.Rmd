@@ -249,9 +249,18 @@ COMMENT
 
 ## Create total activity variable
 ```{r}
-merged_data_2 |>
+merged_data_3 = merged_data_2 |>
   mutate(
     total_activity = rowSums(across(c(min1:min1440))
   ))
 ```
 
+## Create plots of total activity by age, comparing men and women, separate panels for each educ level
+```{r}
+ggplot(merged_data_3, aes(x = age, y = total_activity, color=sex)) +
+  geom_point() +
+  geom_smooth(se=FALSE) +
+  facet_wrap(~ education) + 
+  labs(title = "Total activity by age for men and women across education levels")
+```
+COMMENT
