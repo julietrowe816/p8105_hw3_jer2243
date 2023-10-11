@@ -273,5 +273,15 @@ merged_data_4 |>
   ggplot(aes(x=minute, y=activity, color=sex)) + geom_point(alpha=0.5, size=0.5) +
   geom_smooth() + facet_wrap(.~education) +
   labs(title = "24-hour activity time course by education level and sex")
+
+```
+COMMENT
+
+## Repeat plot above but without outliers where activity >50
+```{r}
+merged_data_4 |>
+  ggplot(aes(x=minute, y=activity, color=sex)) + geom_point(alpha=0.5, size=0.5) +
+  geom_smooth() + facet_wrap(.~education) +
+  labs(title = "24-hour activity time course by education level and sex")
 ```
 COMMENT
