@@ -234,4 +234,14 @@ merged_data_2 |>
   summarize (count=n()) |>
   knitr::kable()
 ```
+COMMENT
+
+## Graph the age distributions for men and women in each education category
+```{r}
+merged_data_2 |>
+  ggplot(aes(x=age, y=education, color=sex)) + geom_boxplot() +
+  labs(title = "Age distributions for men and women by education category")
+
+```
+COMMENT
 
