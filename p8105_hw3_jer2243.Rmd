@@ -121,7 +121,7 @@ brfss_smart2010_tidy = brfss_smart2010 |>
   transform(response = factor(response, levels = levels, labels = values, ordered = TRUE))
   
 ```
-This dataset contains `r nrow(brfss_smart2010_tidy)` rows and `r ncol(brfss_smart2010_tidy)` columns. It
+This dataset contains `r nrow(brfss_smart2010_tidy)` rows and `r ncol(brfss_smart2010_tidy)` columns. 
 
 ## In 2002, which states were observed at 7 or more locations? What about in 2010?
 ```{r}
@@ -157,29 +157,31 @@ brfss_excellent = brfss_smart2010_tidy |>
   select(year, locationabbr, data_value_avg)
   
 ```
-The dataset limited to "excellent" responses consists off 2,125 observations.
+The dataset limited to "excellent" responses consists of `r nrow(brfss_excellent)` observations.
 
 ## Spaghetti plot of the avg value over time within a state
 ```{r}
 ggplot(brfss_excellent, aes(x=year, y=data_value_avg, color=locationabbr, group=locationabbr)) + 
   geom_line() +
   labs(x="Year", y="Average Data Value", color = "State") +
-  ggtitle("Mean Response Prevalence by State over Years")
+  ggtitle("Average Data Value by State over Years")
 ```
-ADD COMMENTS HERE
+In general, the average data value has fluctuated over the years but appears to have decreased slightly overall. Most average data values fall between 17.5 and 27.5, with a few outliers on either end. 
 
 ## Two-panel plot
 ```{r}
 ny_data <- brfss_smart2010_tidy |>
-  filter(locationabbr == "NY" & year %in% c(2006, 2010))
+  filter(locationabbr == "NY" & year %in% c(2006, 2010)) |>
+  separate(locationdesc, into =c("state", "county"), sep=5) |>
+  select(-state) |>
+  group_by(county)
 
-ggplot(ny_data, aes(x = data_value, fill = response)) +
-  geom_histogram(binwidth = 6, position = "dodge") +
-  facet_wrap(~ year, nrow = 1) +
-  labs(x = "Data Value", y = "Frequency", fill = "Response") +
+ggplot(ny_data, aes(x = data_value, y = response)) +
+  geom_point(aes(color=county)) +
+  facet_grid(.~year) +
   ggtitle("Distribution of Data Value by Response in NY State")
 ```
-ADD COMMENTS HERE
+'Data value' values were the highest for the responses "good" and "very good". Overall, data_value increased from 2006 to 2010, and the range of scores per response category also widened.
 
 
 # Problem 3
@@ -207,7 +209,7 @@ demo_data <- demo_data[complete.cases(demo_data), ]
 merged_data = 
   left_join(demo_data, accel_data, by = "seqn")
 ```
-
+The full merged dataset with demographic and accelerometer data contains `r nrow(merged_data)` observations.
 
 ## Encode data with reasonable variable classes
 
@@ -234,7 +236,7 @@ merged_data_2 |>
   summarize (count=n()) |>
   knitr::kable()
 ```
-COMMENT
+For both males and females, the highest number of observations was in the "more than high school" education category. The lowest count for females was in the "HS equivalent" category, and the lowest count for males was in the "less than HS" category.
 
 ## Graph the age distributions for men and women in each education category
 ```{r}
@@ -245,7 +247,7 @@ merged_data_2 |>
   labs(title = "Age distributions for men and women by education category")
 
 ```
-COMMENT
+Females in the highest education group tended to be younger, while males in the highest education group tended to be younger than 40 or above 60. Males and females in the "HS equivalent" or "less than HS" groups tended to be older or middle aged, and the distributions across sex appear fairly similar.
 
 ## Create total activity variable
 ```{r}
@@ -262,5 +264,11 @@ ggplot(merged_data_3, aes(x = age, y = total_activity, color=sex)) +
   geom_smooth(se=FALSE) +
   facet_wrap(~ education) + 
   labs(title = "Total activity by age for men and women across education levels")
+```
+Overall, total activity tended to decrease as age increased for both sexes and all education groups. In the "HS equivalent" and "more than HS" groups, females tended to be more active than males, while in the "less than HS" group, males were slightly more active than females. The biggest difference in activity level between males and females was seen for those in the "HS equivalent" group between the ages of 30 and 50.
+
+## Make a 3-panel plot of the 24-hr activity time course for each education level and use color to indicate sex
+```{r}
+
 ```
 COMMENT
