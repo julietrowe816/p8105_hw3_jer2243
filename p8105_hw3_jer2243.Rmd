@@ -121,24 +121,24 @@ This dataset contains `r nrow(brfss_smart2010_tidy)` rows and `r ncol(brfss_smar
 brfss_2002 <- brfss_smart2010_tidy |>
   filter(year==2002)
 
-result <- brfss_2002 |>
+result1 <- brfss_2002 |>
   group_by(locationabbr) |>
   summarise(unique_locationdesc = n_distinct(locationdesc)) |>
   filter(unique_locationdesc >= 7)
 
-print(result)
+print(result1)
 
 brfss_2010 <- brfss_smart2010_tidy |>
   filter(year==2010)
 
-result <- brfss_2010 |>
+result2 <- brfss_2010 |>
   group_by(locationabbr) |>
   summarise(unique_locationdesc = n_distinct(locationdesc)) |>
   filter(unique_locationdesc >= 7)
 
-print(result)
+print(result2)
 ```
-In 2002, 6 states were observed at 7 or more locations (CT, FL, MA, NC, NJ, PA). In 2010, 14 states were observed at 7 or more locations (CA, CO, FL, MA, MD, NC, NE, NJ, NY, OH, PA, SC, TX, WA).
+In 2002, `r nrow(filter(result1, unique_locationdesc >= 7))` states were observed at 7 or more locations. These included `r pull(filter(result1, unique_locationdesc >=7), locationabbr)`. In 2010, `r nrow(filter(result2, unique_locationdesc >= 7))` states were observed at 7 or more locations. These included `r pull(filter(result2, unique_locationdesc >=7), locationabbr)`.
 
 
 ## Construct a dataset limited to "excellent" responses
@@ -270,18 +270,18 @@ merged_data_4 = merged_data_3 |>
     )
 
 merged_data_4 |>
-  ggplot(aes(x=minute, y=activity, color=sex)) + geom_point(alpha=0.5, size=0.5) +
-  geom_smooth() + facet_wrap(.~education) +
+  ggplot(aes(x=minute, y=activity, color=sex)) + geom_point(alpha=0.25, size=0.1) + geom_smooth() + facet_wrap(.~education) +
   labs(title = "24-hour activity time course by education level and sex")
 
 ```
-COMMENT
+For all three panels, there was a dip in activity levels during the early morning hours, and the highest activity levels were around midday. Overall, it appears as though the "more than HS" group had slightly higher activity levels compared to the other two groups.
 
 ## Repeat plot above but without outliers where activity >50
 ```{r}
 merged_data_4 |>
+  filter(activity < 50) |>
   ggplot(aes(x=minute, y=activity, color=sex)) + geom_point(alpha=0.5, size=0.5) +
-  geom_smooth() + facet_wrap(.~education) +
+  geom_smooth(linewidth = 2) + facet_wrap(.~education) +
   labs(title = "24-hour activity time course by education level and sex")
 ```
-COMMENT
+Excluding the outliers where activity > 50 allows to get a slightly more useful, zoomed in view of the data. 
