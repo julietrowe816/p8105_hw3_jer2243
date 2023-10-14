@@ -182,10 +182,10 @@ ggplot(ny_data, aes(x = data_value, y = response)) +
 
 ## Import and clean demographic and accelerometer data
 ```{r}
-demo_data = read_csv(file = "~/Desktop/p8105_hw3_jer2243/nhanes_covar.csv", skip=4) |>
+demo_data = read_csv(file = "nhanes_covar.csv", skip=4) |>
   janitor::clean_names()
 
-accel_data = read_csv(file = "~/Desktop/p8105_hw3_jer2243/nhanes_accel.csv") |>
+accel_data = read_csv(file = "nhanes_accel.csv") |>
   janitor::clean_names()
 ```
 
@@ -274,7 +274,7 @@ merged_data_4 |>
   labs(title = "24-hour activity time course by education level and sex")
 
 ```
-For all three panels, there was a dip in activity levels during the early morning hours, and the highest activity levels were around midday. Overall, it appears as though the "more than HS" group had slightly higher activity levels compared to the other two groups.
+For all three panels, there was a dip in activity levels during the early morning hours, and the highest activity levels were around midday. Overall, it appears as though the "more than HS" group had slightly higher activity levels compared to the other two groups. It also appears that females had slightly more activity than males.
 
 ## Repeat plot above but without outliers where activity >50
 ```{r}
